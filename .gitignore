@@ -2,9 +2,8 @@ node_modules
 dist
 .tmp
 .sass-cache
-app/components
+app/bower_components
 app/WEB-INF/classes
 app/WEB-INF/lib
 libpeerconnection.log
 pgu-konami.iml
-
