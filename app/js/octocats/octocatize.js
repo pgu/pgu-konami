@@ -31,75 +31,85 @@
         'okal-eltocat.jpg',
         'octobiwan.jpg'
     ].map(function(name) {
-            return '/easter_eggs/octocats/img/' + (is_chrome ? name.replace(/\.[a-z]+$/, '.webp') : name);
+            return 'js/octocats/img/' + (is_chrome ? name.replace(/\.[a-z]+$/, '.webp') : name);
     });
 
     var counter = 0;
 
-    $.fn.octocatize = function () {
+    var octocatize = function () {
 
-        return this.each(function () {
+        counter++;
 
-            counter++;
+        var currentOctocats;
 
-            var currentOctocats;
+        if (counter < 6) {
+            currentOctocats = tmpOctocats;
+        } else {
+            currentOctocats = window.octocats || tmpOctocats;
+        }
 
-            if (counter < 15) {
-                currentOctocats = tmpOctocats;
-            } else {
-                currentOctocats = window.octocats || tmpOctocats;
-            }
+        var randomImageUrl = currentOctocats[getRandomInt(0, currentOctocats.length -1)];
 
-            var randomImageUrl = currentOctocats[getRandomInt(0, currentOctocats.length -1)];
+        var locked = false;
 
-            var locked = false;
+        var octocat = $('<img style="display: none;z-index:30000" src="' + randomImageUrl + '" />');
+        $('body').append(octocat);
 
-            var octocat = $('<img style="display: none;z-index:30000" src="' + randomImageUrl + '" />');
-            $('body').append(octocat);
+        octocat.css({
+            "position": "fixed",
+            "bottom": "-310px",
+            "right": "0",
+            "display": "block"
+        });
 
-            octocat.css({
-                "position": "fixed",
-                "bottom": "-310px",
-                "right": "0",
-                "display": "block"
-            });
+        function init(imgUrl) {
+            var image = new Image();
+            image.onload = function () { initAfterImageLoad() };
+            image.src = imgUrl;
+        }
 
-            function init(imgUrl) {
-                var image = new Image();
-                image.onload = function () { initAfterImageLoad() };
-                image.src = imgUrl;
-            }
+        init(randomImageUrl);
 
-            init(randomImageUrl);
+        // Animating Code
+        function initAfterImageLoad() {
+            locked = true;
 
-            // Animating Code
-            function initAfterImageLoad() {
-                locked = true;
+            // Movement Hilarity
+            octocat.animate({
+                "bottom": "0",
+                "height": "75%",
+                "width": "50%"
+            }, 100, function () {
 
-                // Movement Hilarity
-                octocat.animate({
-                    "bottom": "0",
-                    "height": "75%",
-                    "width": "50%"
-                }, 100, function () {
-
-                    $(this).animate({
-                        "bottom": "-2px"
-                    }, 300, function () {
-                        var offset = (($(this).position().left) + 400);
-                        $(this).delay(300).animate({
-                            "right": offset
-                        }, 2200, function () {
-                            octocat.remove();
-                            locked = false;
-                        })
-                    });
+                $(this).animate({
+                    "bottom": "-2px"
+                }, 300, function () {
+                    var offset = (($(this).position().left) + 400);
+                    $(this).delay(300).animate({
+                        "right": offset
+                    }, 2200, function () {
+                        octocat.remove();
+                        locked = false;
+                    })
                 });
-            }
+            });
+        }
+    };
 
+    function repeat_octocatize(n) {
+        for (var i = 0; i < n; i++) {
+            setTimeout(function() {
+                octocatize();
+            }, i * 1000);
+        }
+    }
 
-        }); //each call
-    } //orbit plugin call
+    $.fn.octocatize = function() {
+        return this.each(function() {
+            repeat_octocatize(5);
+        });
+    }; //orbit plugin call
+
 })(jQuery, window);
 
 $("body").octocatize();

@@ -8,6 +8,7 @@ angular.module('pguKonamiApp').controller('MainCtrl', function ($scope) {
             startHalloween();
 
         } else if (anim_key === 'octocats') {
+            startOctocats();
 
         } else if (anim_key === 'cornify') {
 
@@ -78,6 +79,21 @@ angular.module('pguKonamiApp').controller('MainCtrl', function ($scope) {
         }
 
         window.addEventListener('message', receiveMessage, false);
+    }
+
+    function toggle(urlOfScript, methodToCall) {
+        if ($('body')[methodToCall]) {
+            $('body')[methodToCall]();
+        } else {
+            $.getScript(urlOfScript);
+        }
+    }
+
+    function startOctocats() {
+        toggle('/js/octocats/octocatize.js', 'octocatize');
+        if (!$('body')['octocatize']) {
+            $.getScript('/js/octocats/octocats-loader.js');
+        }
     }
 
 });
