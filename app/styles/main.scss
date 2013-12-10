@@ -42,3 +42,21 @@ body {
     background:      -o-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
     background:         radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
 }
+
+#trick_container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 20000;
+}
+
+#trick_or_treat {
+    font-family: 'Creepster', cursive;
+    font-size: 9em;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 0.2em;
+    color: rgba(250, 111, 42, 0.8);
+}

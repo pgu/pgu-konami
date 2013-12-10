@@ -37,7 +37,7 @@
     var pictureExtension = window.chrome ? '.webp' : '.png';
 
     function getUrl(pictureName) {
-        return '/easter_eggs/halloween/img/' + pictureName + pictureExtension;
+        return 'img/' + pictureName + pictureExtension;
     }
 
     function getUrls(pictureStr) {
