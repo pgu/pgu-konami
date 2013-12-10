@@ -5,6 +5,14 @@
  */
 var cornify_count = 0;
 cornify_add = function() {
+    for (var i = 0; i< 5; i++) {
+        setTimeout(function() {
+            cornify_add_one();
+        }, i * 1000);
+    }
+}
+
+cornify_add_one = function() {
     cornify_count += 1;
     var cornify_url = 'http://www.cornify.com/';
     var div = document.createElement('div');
@@ -28,7 +36,7 @@ cornify_add = function() {
         height = Math.round( height*100 )+'%';
     }
 
-    div.onclick = cornify_add;
+    div.onclick = cornify_add_one;
     div.style.zIndex = 10;
     div.style.outline = 0;
 

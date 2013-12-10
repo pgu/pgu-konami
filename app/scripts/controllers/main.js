@@ -5,18 +5,27 @@ angular.module('pguKonamiApp').controller('MainCtrl', function ($scope) {
     $scope.launch = function (anim_key) {
 
         if (anim_key === 'halloween') {
+            clearAnimations();
             startHalloween();
 
         } else if (anim_key === 'octocats') {
+            clearAnimations();
             startOctocats();
 
         } else if (anim_key === 'cornify') {
+            startCornify();
 
         } else {
             throw new Error('Unknown animation!');
         }
 
     };
+
+    function clearAnimations() {
+        if (window.cornify_reset) {
+            cornify_reset();
+        }
+    }
 
     function resizeFrameHalloween() {
         var windowHeight = 768;
@@ -81,7 +90,7 @@ angular.module('pguKonamiApp').controller('MainCtrl', function ($scope) {
         window.addEventListener('message', receiveMessage, false);
     }
 
-    function toggle(urlOfScript, methodToCall) {
+    function startAnimation(urlOfScript, methodToCall) {
         if ($('body')[methodToCall]) {
             $('body')[methodToCall]();
         } else {
@@ -90,10 +99,22 @@ angular.module('pguKonamiApp').controller('MainCtrl', function ($scope) {
     }
 
     function startOctocats() {
-        toggle('/js/octocats/octocatize.js', 'octocatize');
+        startAnimation('/js/octocats/octocatize.js', 'octocatize');
         if (!$('body')['octocatize']) {
             $.getScript('/js/octocats/octocats-loader.js');
         }
+    }
+
+    function clearCornifyOnEscape(e) {
+        if (27 === e.which) {
+            window.cornify_reset();
+            $(document).unbind('keyup', clearCornifyOnEscape);
+        }
+    }
+
+    function startCornify() {
+        startAnimation('js/cornify/cornify.js', 'cornify_add');
+        $(document).keyup(clearCornifyOnEscape);
     }
 
 });
