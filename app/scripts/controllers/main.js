@@ -115,7 +115,7 @@ angular.module('pguKonamiApp').controller('MainCtrl', function ($scope, $timeout
     function startOctocats() {
         startAnimation('/js/octocats/octocatize.js', 'octocatize');
 
-        if (!$('body')['octocatize']) {
+        if (!$('body').octocatize) {
             $.getScript('/js/octocats/octocats-loader.js');
         }
     }
