@@ -227,4 +227,5 @@
     }
 
     start();
+
 })(jQuery, window, _, Box2D);

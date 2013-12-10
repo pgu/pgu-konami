@@ -2189,4 +2189,4 @@ tp.dg("text", function () {
 });
 delete tp.ds;
 delete tp.dg;
-delete this.tp
+delete this.tp;

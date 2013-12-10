@@ -8,20 +8,23 @@ angular.module('pguKonamiApp').controller('MainCtrl', function ($scope, $timeout
 
         $scope.isRunningAnimation = true;
 
-        if (anim_key === 'halloween') {
-            clearAnimations();
-            startHalloween();
+        try {
+            if (anim_key === 'halloween') {
+                clearAnimations();
+                startHalloween();
 
-        } else if (anim_key === 'octocats') {
-            clearAnimations();
-            startOctocats();
+            } else if (anim_key === 'octocats') {
+                clearAnimations();
+                startOctocats();
 
-        } else if (anim_key === 'cornify') {
-            startCornify();
+            } else if (anim_key === 'cornify') {
+                startCornify();
 
-        } else {
+            } else {
+                throw new Error('Unknown animation!');
+            }
+        } catch (e) {
             endAnimationCallback();
-            throw new Error('Unknown animation!');
         }
 
     };

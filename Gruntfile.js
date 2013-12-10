@@ -189,15 +189,17 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
-      options: {
-        dest: '<%= yeoman.dist %>'
+      main: {
+        files: { '<%= yeoman.dist %>/index.html': '<%= yeoman.app %>/index.html' }
+      },
+      halloween: {
+        files: { '<%= yeoman.dist %>/js/halloween/halloween.html': '<%= yeoman.app %>/js/halloween/halloween.html' }
       }
     },
 
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
-      html: ['<%= yeoman.dist %>/{,*/}*.html'],
+      html: ['<%= yeoman.dist %>/{,*/}*.html', '<%= yeoman.dist %>/js/halloween/halloween.html'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
         assetsDirs: ['<%= yeoman.dist %>']
@@ -280,7 +282,11 @@ module.exports = function (grunt) {
             'bower_components/**/*',
             'images/{,*/}*.{webp}',
             'fonts/*',
-            'WEB-INF/**/*'
+            'WEB-INF/**/*',
+            'js/cornify/**/*',
+            'js/halloween/img/**/*',
+            'js/halloween/*.html',
+            'js/octocats/**/*'
           ]
         }, {
           expand: true,
@@ -331,15 +337,20 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
+    uglify: {
+       options: {
+        mangle: {
+            except: ['jQuery', 'window', '_', 'Box2D', 'octocatize', 'cornify_add', 'cornify_reset']
+        }
+       },
+       dist: {
+         files: {
+           '<%= yeoman.dist %>/js/cornify/cornify.js': ['<%= yeoman.app %>/js/cornify/cornify.js'],
+           '<%= yeoman.dist %>/js/octocats/octocatize.js': ['<%= yeoman.app %>/js/octocats/octocatize.js'],
+           '<%= yeoman.dist %>/js/octocats/octocats-loader.js': ['<%= yeoman.app %>/js/octocats/octocats-loader.js']
+         }
+       }
+    },
     // concat: {
     //   dist: {}
     // },
@@ -398,7 +409,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:jshint',
-    'test',
+//    'test',
     'build'
   ]);
 };
