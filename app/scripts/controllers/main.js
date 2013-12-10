@@ -1,8 +1,12 @@
 'use strict';
 
-angular.module('pguKonamiApp').controller('MainCtrl', function ($scope) {
+angular.module('pguKonamiApp').controller('MainCtrl', function ($scope, $timeout) {
+
+    $scope.isRunningAnimation = false;
 
     $scope.launch = function (anim_key) {
+
+        $scope.isRunningAnimation = true;
 
         if (anim_key === 'halloween') {
             clearAnimations();
@@ -16,6 +20,7 @@ angular.module('pguKonamiApp').controller('MainCtrl', function ($scope) {
             startCornify();
 
         } else {
+            endAnimationCallback();
             throw new Error('Unknown animation!');
         }
 
@@ -23,7 +28,7 @@ angular.module('pguKonamiApp').controller('MainCtrl', function ($scope) {
 
     function clearAnimations() {
         if (window.cornify_reset) {
-            cornify_reset();
+            window.cornify_reset();
         }
     }
 
@@ -46,6 +51,7 @@ angular.module('pguKonamiApp').controller('MainCtrl', function ($scope) {
         if (isHalloweenON) {
             $('#halloween').remove();
             $(window).off('resize', resizeFrameHalloween);
+            endAnimationCallback();
         }
     }
 
@@ -90,16 +96,25 @@ angular.module('pguKonamiApp').controller('MainCtrl', function ($scope) {
         window.addEventListener('message', receiveMessage, false);
     }
 
+    function endAnimationCallback() {
+        $timeout(function () {
+            $scope.isRunningAnimation = false;
+        }, 0);
+    }
+
     function startAnimation(urlOfScript, methodToCall) {
         if ($('body')[methodToCall]) {
-            $('body')[methodToCall]();
+            $('body')[methodToCall](endAnimationCallback);
         } else {
-            $.getScript(urlOfScript);
+            $.getScript(urlOfScript, function () {
+                $('body')[methodToCall](endAnimationCallback);
+            });
         }
     }
 
     function startOctocats() {
         startAnimation('/js/octocats/octocatize.js', 'octocatize');
+
         if (!$('body')['octocatize']) {
             $.getScript('/js/octocats/octocats-loader.js');
         }

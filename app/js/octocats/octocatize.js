@@ -36,7 +36,7 @@
 
     var counter = 0;
 
-    var octocatize = function () {
+    var octocatize = function (endAnimationCallback) {
 
         counter++;
 
@@ -90,26 +90,34 @@
                     }, 2200, function () {
                         octocat.remove();
                         locked = false;
+                        if (endAnimationCallback) {
+                            endAnimationCallback();
+                        }
                     })
                 });
             });
         }
     };
 
-    function repeat_octocatize(n) {
+    function repeat_octocatize(n, endAnimationCallback) {
         for (var i = 0; i < n; i++) {
-            setTimeout(function() {
-                octocatize();
-            }, i * 1000);
+            setTimeout((function(idx) {
+                return function() {
+                    if (idx === n-1) {
+                        octocatize(endAnimationCallback);
+                    } else {
+                        octocatize();
+                    }
+                }
+
+            })(i), i * 1000);
         }
     }
 
-    $.fn.octocatize = function() {
+    $.fn.octocatize = function(endAnimationCallback) {
         return this.each(function() {
-            repeat_octocatize(5);
+            repeat_octocatize(5, endAnimationCallback);
         });
     }; //orbit plugin call
 
 })(jQuery, window);
-
-$("body").octocatize();
