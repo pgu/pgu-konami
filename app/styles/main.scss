@@ -59,3 +59,51 @@ body {
     margin-top: 0.2em;
     color: rgba(250, 111, 42, 0.8);
 }
+
+#k_modal {
+    -webkit-transition: background-color 2s;
+    -moz-transition:    background-color 2s;
+    -o-transition:      background-color 2s;
+    transition:         background-color 2s;
+}
+
+.black_bg {
+    background-color: #000;
+}
+
+.static_goc {
+    margin: 0 auto;
+    display: block;
+    opacity: 0;
+
+    -webkit-transition: all 5s;
+    -moz-transition:    all 5s;
+    -o-transition:      all 5s;
+    transition:         all 5s;
+}
+
+.anim_goc {
+    opacity: 1;
+
+    -webkit-transform:  translate(0, 100px) scale(1.2, 1.1);
+    -ms-transform:      translate(0, 100px) scale(1.2, 1.1);
+    -o-transform:       translate(0, 100px) scale(1.2, 1.1);
+    transform:          translate(0, 100px) scale(1.2, 1.1);
+}
+
+.static_meme {
+    margin: 0 auto;
+    display: block;
+    opacity: 0;
+
+    margin-top: 100px;
+
+    -webkit-transition: opacity 2s;
+    -moz-transition:    opacity 2s;
+    -o-transition:      opacity 2s;
+    transition:         opacity 2s;
+}
+
+.anim_meme {
+    opacity: 1;
+}
