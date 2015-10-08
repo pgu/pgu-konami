@@ -9,6 +9,18 @@ Purpose
 ---
 A recap of some animations triggered by various konami codes on the SFEIR website.
 
+![](konami-halloween.gif)
+
+
+![](konami-octocats.gif)
+
+
+![](konami-cornify.gif)
+
+
+![](konami-hidden.gif)
+
+
 Technologies
 ---
 
@@ -21,4 +33,3 @@ Built with:
 - [Grunt](http://gruntjs.com/)
 - [App Engine](https://developers.google.com/appengine/)
 - [Box2DWeb](http://code.google.com/p/box2dweb/)
-
